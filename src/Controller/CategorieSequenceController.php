@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Categoriesequence;
+use App\Entity\CategorieSequence;
 use App\Form\CategoriesequenceType;
 use App\Kernel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,7 +15,7 @@ use App\Service\ContainerParametersHelper;
 /**
  * @Route("/categoriesequence")
  */
-class CategoriesequenceController extends AbstractController
+class CategorieSequenceController extends AbstractController
 {
     /**
      * @Route("/", name="categoriesequence_index", methods={"GET"})
@@ -23,7 +23,7 @@ class CategoriesequenceController extends AbstractController
     public function index(): Response
     {
         $categoriesequences = $this->getDoctrine()
-            ->getRepository(Categoriesequence::class)
+            ->getRepository(CategorieSequence::class)
             ->findAll();
 
         return $this->render('categoriesequence/index.html.twig', [
@@ -36,7 +36,7 @@ class CategoriesequenceController extends AbstractController
      */
     public function new(Request $request, SluggerInterface $slugger, ContainerParametersHelper $pathHelpers): Response
     {
-        $categoriesequence = new Categoriesequence();
+        $categoriesequence = new CategorieSequence();
         $form = $this->createForm(CategoriesequenceType::class, $categoriesequence);
         $form->handleRequest($request);
 
@@ -68,7 +68,7 @@ class CategoriesequenceController extends AbstractController
     /**
      * @Route("/{id}", name="categoriesequence_show", methods={"GET"})
      */
-    public function show(Categoriesequence $categoriesequence): Response
+    public function show(CategorieSequence $categoriesequence): Response
     {
         return $this->render('categoriesequence/show.html.twig', [
             'categoriesequence' => $categoriesequence,
@@ -78,7 +78,7 @@ class CategoriesequenceController extends AbstractController
     /**
      * @Route("/{id}/edit", name="categoriesequence_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Categoriesequence $categoriesequence, SluggerInterface $slugger, ContainerParametersHelper $pathHelpers): Response
+    public function edit(Request $request, CategorieSequence $categoriesequence, SluggerInterface $slugger, ContainerParametersHelper $pathHelpers): Response
     {
         $form = $this->createForm(CategoriesequenceType::class, $categoriesequence);
         $form->handleRequest($request);
@@ -111,7 +111,7 @@ class CategoriesequenceController extends AbstractController
     /**
      * @Route("/{id}", name="categoriesequence_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Categoriesequence $categoriesequence): Response
+    public function delete(Request $request, CategorieSequence $categoriesequence): Response
     {
         if ($this->isCsrfTokenValid('delete'.$categoriesequence->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();

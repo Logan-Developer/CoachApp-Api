@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ApiResource
  */
-class Activitesequencetheorique
+class ActiviteSequenceTheorique
 {
     /**
      * @var int
@@ -43,7 +43,7 @@ class Activitesequencetheorique
     private $ordre;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Sequencetheorique::class, inversedBy="activitesequencetheoriques")
+     * @ORM\ManyToOne(targetEntity=SequenceTheorique::class, inversedBy="ActiviteSequenceTheorique")
      * @ORM\JoinColumn(nullable=false)
      */
     private $idsequencetheorique;
@@ -95,12 +95,12 @@ class Activitesequencetheorique
         return $this;
     }
 
-    public function getIdsequencetheorique(): ?Sequencetheorique
+    public function getIdsequencetheorique(): ?SequenceTheorique
     {
         return $this->idsequencetheorique;
     }
 
-    public function setIdsequencetheorique(?Sequencetheorique $idsequencetheorique): self
+    public function setIdsequencetheorique(?SequenceTheorique $idsequencetheorique): self
     {
         $this->idsequencetheorique = $idsequencetheorique;
 

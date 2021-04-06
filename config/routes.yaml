@@ -1,2 +1,2 @@
 api_authentication:
-  path: /authentication
+  path: /authentication_token

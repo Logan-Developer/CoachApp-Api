@@ -2,8 +2,8 @@
 
 namespace App\Form;
 
-use App\Entity\Categoriesequence;
-use App\Entity\Sequencetheorique;
+use App\Entity\CategorieSequence;
+use App\Entity\SequenceTheorique;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -25,7 +25,7 @@ class SequencetheoriqueType extends AbstractType
                 ],
             ])
             ->add('idcategoriesequence', EntityType::class, [
-                'class' => Categoriesequence::class,
+                'class' => CategorieSequence::class,
                 'choice_label' => function ($category) {
                     return $category->getTitre();
                 },
@@ -37,7 +37,7 @@ class SequencetheoriqueType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Sequencetheorique::class,
+            'data_class' => SequenceTheorique::class,
         ]);
     }
 }

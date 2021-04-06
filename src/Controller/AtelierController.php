@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\Activitesequencetheorique;
+use App\Entity\ActiviteSequenceTheorique;
 use App\Entity\Atelier;
 use App\Entity\CommentaireAtelier;
-use App\Entity\Sequencetheorique;
+use App\Entity\SequenceTheorique;
 use App\Form\AtelierType;
 use App\Form\CommentaireAtelierType;
 use App\Service\ContainerParametersHelper;

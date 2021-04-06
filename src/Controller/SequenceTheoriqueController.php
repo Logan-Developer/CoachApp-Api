@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Activitesequencetheorique;
+use App\Entity\ActiviteSequenceTheorique;
 use App\Entity\Atelier;
-use App\Entity\Sequencetheorique;
+use App\Entity\SequenceTheorique;
 use App\Form\ActivitesequencetheoriqueType;
 use App\Form\SequencetheoriqueType;
 use Doctrine\Common\Collections\Criteria;
@@ -17,7 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 /**
  * @Route("/sequencetheorique")
  */
-class SequencetheoriqueController extends AbstractController
+class SequenceTheoriqueController extends AbstractController
 {
     /**
      * @Route("/", name="sequencetheorique_index", methods={"GET"})
@@ -25,7 +25,7 @@ class SequencetheoriqueController extends AbstractController
     public function index(): Response
     {
         $sequencetheoriques = $this->getDoctrine()
-            ->getRepository(Sequencetheorique::class)
+            ->getRepository(SequenceTheorique::class)
             ->findAll();
 
         return $this->render('sequencetheorique/index.html.twig', [
@@ -64,7 +64,7 @@ class SequencetheoriqueController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $sequencetheorique = new Sequencetheorique();
+        $sequencetheorique = new SequenceTheorique();
         $form = $this->createForm(SequencetheoriqueType::class, $sequencetheorique);
         $form->handleRequest($request);
 
@@ -87,14 +87,14 @@ class SequencetheoriqueController extends AbstractController
      * @Entity("sequencetheorique", expr="repository.find(sequencetheorique)")
      * @Entity("activitesequencetheorique", expr="repository.find(activitesequencetheorique)")
      */
-    public function activitesequencetheorique_haut(Sequencetheorique $sequencetheorique, Activitesequencetheorique $activitesequencetheorique, Request $request): Response
+    public function activitesequencetheorique_haut(SequenceTheorique $sequencetheorique, ActiviteSequenceTheorique $activitesequencetheorique, Request $request): Response
     {
 
         if($activitesequencetheorique->getOrdre() >= 1)
         {
             $ordre = $activitesequencetheorique->getOrdre();
             $activitesequencetheoriqueDessus = $this->getDoctrine()
-                ->getRepository(Activitesequencetheorique::class)
+                ->getRepository(ActiviteSequenceTheorique::class)
                 ->findOneBy(['idsequencetheorique' => $sequencetheorique->getId(),
                           'ordre' =>  $ordre -1]);
 
@@ -114,17 +114,17 @@ class SequencetheoriqueController extends AbstractController
     /**
      * @Route("/activitesequencetheorique_bas/{sequencetheorique}/{activitesequencetheorique}", name="activitesequencetheorique_bas", methods={"GET","POST"})
      */
-    public function activitesequencetheorique_bas(Sequencetheorique $sequencetheorique, Activitesequencetheorique $activitesequencetheorique, Request $request): Response
+    public function activitesequencetheorique_bas(SequenceTheorique $sequencetheorique, ActiviteSequenceTheorique $activitesequencetheorique, Request $request): Response
     {
         $activitesequencetheoriques = $this->getDoctrine()
-            ->getRepository(Activitesequencetheorique::class)
+            ->getRepository(ActiviteSequenceTheorique::class)
             ->findBy(['idsequencetheorique' => $sequencetheorique->getId()]);
 
         if($activitesequencetheorique->getOrdre() < count($activitesequencetheoriques)-1)
         {
             $ordre = $activitesequencetheorique->getOrdre();
             $activitesequencetheoriqueDessous = $this->getDoctrine()
-                ->getRepository(Activitesequencetheorique::class)
+                ->getRepository(ActiviteSequenceTheorique::class)
                 ->findOneBy(['idsequencetheorique' => $sequencetheorique->getId(),
                     'ordre' =>  $ordre +1]);
 
@@ -142,7 +142,7 @@ class SequencetheoriqueController extends AbstractController
     /**
      * @Route("/activitesequencetheorique_supprimer/{sequencetheorique}/{activitesequencetheorique}", name="activitesequencetheorique_supprimer", methods={"GET","POST"})
      */
-    public function activitesequencetheorique_supprimer(Sequencetheorique $sequencetheorique, Activitesequencetheorique $activitesequencetheorique, Request $request): Response
+    public function activitesequencetheorique_supprimer(SequenceTheorique $sequencetheorique, ActiviteSequenceTheorique $activitesequencetheorique, Request $request): Response
     {
        // $this->getUser();
         $expr = Criteria::expr();
@@ -156,7 +156,7 @@ class SequencetheoriqueController extends AbstractController
         $entityManager->flush($activitesequencetheorique);
 
         $activitesequencetheoriqueDessous = $this->getDoctrine()
-            ->getRepository(Activitesequencetheorique::class)
+            ->getRepository(ActiviteSequenceTheorique::class)
             ->matching($criteria);
 
         $entityManager = $this->getDoctrine()->getManager();
@@ -169,19 +169,19 @@ class SequencetheoriqueController extends AbstractController
         return $this->ReturnSequence($sequencetheorique);
     }
 
-    private function ReturnSequence(Sequencetheorique $sequencetheorique)
+    private function ReturnSequence(SequenceTheorique $sequencetheorique)
     {
         $ateliers=$this->getDoctrine()
             ->getRepository(Atelier::class)
             ->findAll();
         $atelier = $ateliers[0];
-        $activitesequencetheorique = new Activitesequencetheorique();
+        $activitesequencetheorique = new ActiviteSequenceTheorique();
         $activitesequencetheorique->setIdatelier($atelier);
         $form = $this->createForm(ActivitesequencetheoriqueType::class, $activitesequencetheorique);
 
         /*Récupération de la dernière version des activités de cette séquence*/
         $activitesequencetheoriques = $this->getDoctrine()
-            ->getRepository(Activitesequencetheorique::class)
+            ->getRepository(ActiviteSequenceTheorique::class)
             ->findBy(['idsequencetheorique' => $sequencetheorique->getId()]
                 ,['ordre' => 'ASC']);
 
@@ -197,12 +197,12 @@ class SequencetheoriqueController extends AbstractController
     /**
      * @Route("/{id}", name="sequencetheorique_show", methods={"GET","POST"})
      */
-    public function show(Sequencetheorique $sequencetheorique, Request $request): Response
+    public function show(SequenceTheorique $sequencetheorique, Request $request): Response
     {
 
 
         //Gestion depuis le formulaire
-        $activitesequencetheorique = new Activitesequencetheorique();
+        $activitesequencetheorique = new ActiviteSequenceTheorique();
         $form = $this->createForm(ActivitesequencetheoriqueType::class, $activitesequencetheorique);
         $form->handleRequest($request);
         dump($activitesequencetheorique);
@@ -213,7 +213,7 @@ class SequencetheoriqueController extends AbstractController
 
             /*Récupération de la liste des activités de cette séquence pour le count*/
             $activitesequencetheoriques = $this->getDoctrine()
-                ->getRepository(Activitesequencetheorique::class)
+                ->getRepository(ActiviteSequenceTheorique::class)
                 ->findBy(['idsequencetheorique' => $sequencetheorique->getId()]);
 
             //Paramétrage de l'activité
@@ -226,7 +226,7 @@ class SequencetheoriqueController extends AbstractController
             $entityManager->flush();
 
             //MàJ du formulaire
-            $activitesequencetheorique = new Activitesequencetheorique();
+            $activitesequencetheorique = new ActiviteSequenceTheorique();
             $form = $this->createForm(ActivitesequencetheoriqueType::class, $activitesequencetheorique);
         }
 
@@ -243,7 +243,7 @@ class SequencetheoriqueController extends AbstractController
 
         /*Récupération de la dernière version des activités de cette séquence*/
         $activitesequencetheoriques = $this->getDoctrine()
-            ->getRepository(Activitesequencetheorique::class)
+            ->getRepository(ActiviteSequenceTheorique::class)
             ->findBy(['idsequencetheorique' => $sequencetheorique->getId()]);
 
         return $this->render('sequencetheorique/show.html.twig', [
@@ -257,7 +257,7 @@ class SequencetheoriqueController extends AbstractController
     /**
      * @Route("/{id}/edit", name="sequencetheorique_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Sequencetheorique $sequencetheorique): Response
+    public function edit(Request $request, SequenceTheorique $sequencetheorique): Response
     {
         $form = $this->createForm(SequencetheoriqueType::class, $sequencetheorique);
         $form->handleRequest($request);
@@ -277,7 +277,7 @@ class SequencetheoriqueController extends AbstractController
     /**
      * @Route("/{id}", name="sequencetheorique_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Sequencetheorique $sequencetheorique): Response
+    public function delete(Request $request, SequenceTheorique $sequencetheorique): Response
     {
         if ($this->isCsrfTokenValid('delete'.$sequencetheorique->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();

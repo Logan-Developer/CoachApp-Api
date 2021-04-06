@@ -31,4 +31,4 @@ security:
 
     access_control:
         - { path: ^/api/atelier, roles: [IS_AUTHENTICATED_ANONYMOUSLY, ROLE_USER] }
-        - { path: ^/getCurrentUser, roles: [ROLE_USER] }
+        - { path: ^/api/utilisateurs, roles: [ROLE_ADMIN] }

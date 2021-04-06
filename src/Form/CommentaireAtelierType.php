@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Categoriesequence;
+use App\Entity\CategorieSequence;
 use App\Entity\CommentaireAtelier;
 use App\Entity\Utilisateur;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;

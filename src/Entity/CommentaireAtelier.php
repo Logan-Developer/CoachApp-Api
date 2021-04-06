@@ -8,14 +8,26 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=CommentaireAtelierRepository::class)
- * @ApiResource
+ * @ApiResource(
+ *     collectionOperations={
+ *          "get",
+ *          "post"={"security"="is_granted('ROLE_USER')"}
+ *     },
+ *     itemOperations={
+ *          "get",
+ *          "put"={"security"="is_granted('ROLE_USER') and object.getOwner() == user"},
+ *          "delete"={"security"="(is_granted('ROLE_USER') and object.getOwner() == user) or is_granted('ROLE_ADMIN')"}
+ *     }
+ * )
  */
 class CommentaireAtelier
 {
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
+     * @var int
+     *
      * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Id
      */
     private $id;
 

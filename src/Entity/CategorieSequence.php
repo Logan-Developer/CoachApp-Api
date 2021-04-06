@@ -8,13 +8,13 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Categoriesequence
+ * CategorieSequence
  *
  * @ORM\Table(name="categoriesequence")
  * @ORM\Entity
  * @ApiResource
  */
-class Categoriesequence
+class CategorieSequence
 {
     /**
      * @var int
@@ -40,7 +40,7 @@ class Categoriesequence
     private $image;
 
     /**
-     * @ORM\OneToMany(targetEntity=Sequencetheorique::class, mappedBy="idcategoriesequence", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=sequencetheorique::class, mappedBy="idcategoriesequence", orphanRemoval=true)
      */
     private $sequencetheoriques;
 
@@ -79,14 +79,14 @@ class Categoriesequence
     }
 
     /**
-     * @return Collection|Sequencetheorique[]
+     * @return Collection|SequenceTheorique[]
      */
     public function getSequencetheoriques(): Collection
     {
         return $this->sequencetheoriques;
     }
 
-    public function addSequencetheorique(Sequencetheorique $sequencetheorique): self
+    public function addSequencetheorique(SequenceTheorique $sequencetheorique): self
     {
         if (!$this->sequencetheoriques->contains($sequencetheorique)) {
             $this->sequencetheoriques[] = $sequencetheorique;
@@ -96,7 +96,7 @@ class Categoriesequence
         return $this;
     }
 
-    public function removeSequencetheorique(Sequencetheorique $sequencetheorique): self
+    public function removeSequencetheorique(SequenceTheorique $sequencetheorique): self
     {
         if ($this->sequencetheoriques->removeElement($sequencetheorique)) {
             // set the owning side to null (unless already changed)

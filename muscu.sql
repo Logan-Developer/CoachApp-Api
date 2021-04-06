@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mar. 30 mars 2021 à 01:07
+-- Généré le : sam. 03 avr. 2021 à 08:49
 -- Version du serveur :  10.4.14-MariaDB
 -- Version de PHP : 7.4.9
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `mission2muscu`
+-- Base de données : `muscu`
 --
 
 -- --------------------------------------------------------
@@ -28,12 +28,12 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `activitesequencetheorique` (
-  `id` int(11) NOT NULL,
-  `idsequencetheorique_id` int(11) NOT NULL,
-  `idatelier_id` int(11) NOT NULL,
-  `perfObjectif` double NOT NULL,
-  `ordre` int(11) NOT NULL,
-  `intensiteObjectif` float NOT NULL
+                                             `id` int(11) NOT NULL,
+                                             `idsequencetheorique_id` int(11) NOT NULL,
+                                             `idatelier_id` int(11) NOT NULL,
+                                             `perfObjectif` double NOT NULL,
+                                             `ordre` int(11) NOT NULL,
+                                             `intensiteObjectif` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -69,13 +69,13 @@ INSERT INTO `activitesequencetheorique` (`id`, `idsequencetheorique_id`, `idatel
 --
 
 CREATE TABLE `atelier` (
-  `id` int(11) NOT NULL,
-  `titre` text NOT NULL,
-  `image` text NOT NULL,
-  `uniteDePerformance` text NOT NULL,
-  `uniteDIntensite` text NOT NULL,
-  `description` text NOT NULL,
-  `resume` text NOT NULL
+                           `id` int(11) NOT NULL,
+                           `titre` text NOT NULL,
+                           `image` text NOT NULL,
+                           `uniteDePerformance` text NOT NULL,
+                           `uniteDIntensite` text NOT NULL,
+                           `description` text NOT NULL,
+                           `resume` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -97,11 +97,19 @@ INSERT INTO `atelier` (`id`, `titre`, `image`, `uniteDePerformance`, `uniteDInte
 --
 
 CREATE TABLE `boisson` (
-  `id` int(11) NOT NULL,
-  `titre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+                           `id` int(11) NOT NULL,
+                           `titre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                           `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                           `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `boisson`
+--
+
+INSERT INTO `boisson` (`id`, `titre`, `description`, `image`) VALUES
+(2, 'Power 2000', 'Pour plus d\'énergie', 'BoissonEnergie-60679b95cd0ca.png'),
+(3, 'Hydra 400', 'Pour s\'hydrater et récupérer plus vite', 'BopissonHydra-60679bd948fcb.png');
 
 -- --------------------------------------------------------
 
@@ -110,9 +118,9 @@ CREATE TABLE `boisson` (
 --
 
 CREATE TABLE `categoriesequence` (
-  `id` int(11) NOT NULL,
-  `titre` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` text COLLATE utf8mb4_unicode_ci NOT NULL
+                                     `id` int(11) NOT NULL,
+                                     `titre` text COLLATE utf8mb4_unicode_ci NOT NULL,
+                                     `image` text COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -130,12 +138,12 @@ INSERT INTO `categoriesequence` (`id`, `titre`, `image`) VALUES
 --
 
 CREATE TABLE `commentaire_atelier` (
-  `id` int(11) NOT NULL,
-  `proprietaire_id` int(11) DEFAULT NULL,
-  `titre` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `message` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `date` datetime NOT NULL,
-  `atelier_id` int(11) NOT NULL
+                                       `id` int(11) NOT NULL,
+                                       `proprietaire_id` int(11) DEFAULT NULL,
+                                       `titre` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+                                       `message` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+                                       `date` datetime NOT NULL,
+                                       `atelier_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -175,9 +183,9 @@ INSERT INTO `commentaire_atelier` (`id`, `proprietaire_id`, `titre`, `message`, 
 --
 
 CREATE TABLE `doctrine_migration_versions` (
-  `version` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
-  `executed_at` datetime DEFAULT NULL,
-  `execution_time` int(11) DEFAULT NULL
+                                               `version` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+                                               `executed_at` datetime DEFAULT NULL,
+                                               `execution_time` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -199,10 +207,10 @@ INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_
 --
 
 CREATE TABLE `refresh_tokens` (
-  `id` int(11) NOT NULL,
-  `refresh_token` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `valid` datetime NOT NULL
+                                  `id` int(11) NOT NULL,
+                                  `refresh_token` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+                                  `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                                  `valid` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -232,12 +240,12 @@ INSERT INTO `refresh_tokens` (`id`, `refresh_token`, `username`, `valid`) VALUES
 --
 
 CREATE TABLE `sequencetheorique` (
-  `id` int(11) NOT NULL,
-  `idcategoriesequence_id` int(11) NOT NULL,
-  `titre` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `niveau` int(11) NOT NULL,
-  `proprietaire_id` int(11) DEFAULT NULL,
-  `partage` tinyint(1) DEFAULT NULL
+                                     `id` int(11) NOT NULL,
+                                     `idcategoriesequence_id` int(11) NOT NULL,
+                                     `titre` text COLLATE utf8mb4_unicode_ci NOT NULL,
+                                     `niveau` int(11) NOT NULL,
+                                     `proprietaire_id` int(11) DEFAULT NULL,
+                                     `partage` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -256,13 +264,13 @@ INSERT INTO `sequencetheorique` (`id`, `idcategoriesequence_id`, `titre`, `nivea
 --
 
 CREATE TABLE `utilisateur` (
-  `id` int(11) NOT NULL,
-  `login` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nom_utilisateur` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `prenom_utilisateur` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `roles` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:json)'
+                               `id` int(11) NOT NULL,
+                               `login` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                               `nom_utilisateur` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                               `prenom_utilisateur` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                               `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                               `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                               `roles` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:json)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -286,64 +294,64 @@ INSERT INTO `utilisateur` (`id`, `login`, `nom_utilisateur`, `prenom_utilisateur
 -- Index pour la table `activitesequencetheorique`
 --
 ALTER TABLE `activitesequencetheorique`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_4EDF561A549B9888` (`idsequencetheorique_id`),
-  ADD KEY `IDX_4EDF561A4F4BD20F` (`idatelier_id`);
+    ADD PRIMARY KEY (`id`),
+    ADD KEY `IDX_4EDF561A549B9888` (`idsequencetheorique_id`),
+    ADD KEY `IDX_4EDF561A4F4BD20F` (`idatelier_id`);
 
 --
 -- Index pour la table `atelier`
 --
 ALTER TABLE `atelier`
-  ADD PRIMARY KEY (`id`);
+    ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `boisson`
 --
 ALTER TABLE `boisson`
-  ADD PRIMARY KEY (`id`);
+    ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `categoriesequence`
 --
 ALTER TABLE `categoriesequence`
-  ADD PRIMARY KEY (`id`);
+    ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `commentaire_atelier`
 --
 ALTER TABLE `commentaire_atelier`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_92738A7076C50E4A` (`proprietaire_id`),
-  ADD KEY `IDX_92738A7082E2CF35` (`atelier_id`);
+    ADD PRIMARY KEY (`id`),
+    ADD KEY `IDX_92738A7076C50E4A` (`proprietaire_id`),
+    ADD KEY `IDX_92738A7082E2CF35` (`atelier_id`);
 
 --
 -- Index pour la table `doctrine_migration_versions`
 --
 ALTER TABLE `doctrine_migration_versions`
-  ADD PRIMARY KEY (`version`);
+    ADD PRIMARY KEY (`version`);
 
 --
 -- Index pour la table `refresh_tokens`
 --
 ALTER TABLE `refresh_tokens`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `UNIQ_9BACE7E1C74F2195` (`refresh_token`);
+    ADD PRIMARY KEY (`id`),
+    ADD UNIQUE KEY `UNIQ_9BACE7E1C74F2195` (`refresh_token`);
 
 --
 -- Index pour la table `sequencetheorique`
 --
 ALTER TABLE `sequencetheorique`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_3107E7DE5FEF9641` (`idcategoriesequence_id`),
-  ADD KEY `IDX_3107E7DE76C50E4A` (`proprietaire_id`);
+    ADD PRIMARY KEY (`id`),
+    ADD KEY `IDX_3107E7DE5FEF9641` (`idcategoriesequence_id`),
+    ADD KEY `IDX_3107E7DE76C50E4A` (`proprietaire_id`);
 
 --
 -- Index pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `UNIQ_9B80EC64AA08CB10` (`login`),
-  ADD UNIQUE KEY `UNIQ_9B80EC64E7927C74` (`email`);
+    ADD PRIMARY KEY (`id`),
+    ADD UNIQUE KEY `UNIQ_9B80EC64AA08CB10` (`login`),
+    ADD UNIQUE KEY `UNIQ_9B80EC64E7927C74` (`email`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
@@ -353,49 +361,49 @@ ALTER TABLE `utilisateur`
 -- AUTO_INCREMENT pour la table `activitesequencetheorique`
 --
 ALTER TABLE `activitesequencetheorique`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT pour la table `atelier`
 --
 ALTER TABLE `atelier`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT pour la table `boisson`
 --
 ALTER TABLE `boisson`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `categoriesequence`
 --
 ALTER TABLE `categoriesequence`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT pour la table `commentaire_atelier`
 --
 ALTER TABLE `commentaire_atelier`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT pour la table `refresh_tokens`
 --
 ALTER TABLE `refresh_tokens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT pour la table `sequencetheorique`
 --
 ALTER TABLE `sequencetheorique`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Contraintes pour les tables déchargées
@@ -405,22 +413,22 @@ ALTER TABLE `utilisateur`
 -- Contraintes pour la table `activitesequencetheorique`
 --
 ALTER TABLE `activitesequencetheorique`
-  ADD CONSTRAINT `FK_4EDF561A4F4BD20F` FOREIGN KEY (`idatelier_id`) REFERENCES `atelier` (`id`),
-  ADD CONSTRAINT `FK_4EDF561A549B9888` FOREIGN KEY (`idsequencetheorique_id`) REFERENCES `sequencetheorique` (`id`);
+    ADD CONSTRAINT `FK_4EDF561A4F4BD20F` FOREIGN KEY (`idatelier_id`) REFERENCES `atelier` (`id`),
+    ADD CONSTRAINT `FK_4EDF561A549B9888` FOREIGN KEY (`idsequencetheorique_id`) REFERENCES `sequencetheorique` (`id`);
 
 --
 -- Contraintes pour la table `commentaire_atelier`
 --
 ALTER TABLE `commentaire_atelier`
-  ADD CONSTRAINT `FK_92738A7076C50E4A` FOREIGN KEY (`proprietaire_id`) REFERENCES `utilisateur` (`id`),
-  ADD CONSTRAINT `FK_92738A7082E2CF35` FOREIGN KEY (`atelier_id`) REFERENCES `atelier` (`id`);
+    ADD CONSTRAINT `FK_92738A7076C50E4A` FOREIGN KEY (`proprietaire_id`) REFERENCES `utilisateur` (`id`),
+    ADD CONSTRAINT `FK_92738A7082E2CF35` FOREIGN KEY (`atelier_id`) REFERENCES `atelier` (`id`);
 
 --
 -- Contraintes pour la table `sequencetheorique`
 --
 ALTER TABLE `sequencetheorique`
-  ADD CONSTRAINT `FK_3107E7DE5FEF9641` FOREIGN KEY (`idcategoriesequence_id`) REFERENCES `categoriesequence` (`id`),
-  ADD CONSTRAINT `FK_3107E7DE76C50E4A` FOREIGN KEY (`proprietaire_id`) REFERENCES `utilisateur` (`id`);
+    ADD CONSTRAINT `FK_3107E7DE5FEF9641` FOREIGN KEY (`idcategoriesequence_id`) REFERENCES `categoriesequence` (`id`),
+    ADD CONSTRAINT `FK_3107E7DE76C50E4A` FOREIGN KEY (`proprietaire_id`) REFERENCES `utilisateur` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

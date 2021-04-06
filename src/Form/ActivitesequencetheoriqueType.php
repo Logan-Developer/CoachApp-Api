@@ -2,9 +2,9 @@
 
 namespace App\Form;
 
-use App\Entity\Activitesequencetheorique;
+use App\Entity\ActiviteSequenceTheorique;
 use App\Entity\Atelier;
-use App\Entity\Categoriesequence;
+use App\Entity\CategorieSequence;
 use Doctrine\DBAL\Types\FloatType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -45,7 +45,7 @@ class ActivitesequencetheoriqueType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Activitesequencetheorique::class,
+            'data_class' => ActiviteSequenceTheorique::class,
         ]);
     }
 }

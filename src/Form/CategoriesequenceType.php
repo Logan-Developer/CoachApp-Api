@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Categoriesequence;
+use App\Entity\CategorieSequence;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -30,7 +30,7 @@ class CategoriesequenceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Categoriesequence::class,
+            'data_class' => CategorieSequence::class,
         ]);
     }
 }

@@ -2,32 +2,32 @@
 
 namespace App\Repository;
 
-use App\Entity\Activitesequencetheorique;
+use App\Entity\ActiviteSequenceTheorique;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Activitesequencetheorique |null find($id, $lockMode = null, $lockVersion = null)
- * @method Activitesequencetheorique|null findOneBy(array $criteria, array $orderBy = null)
- * @method Activitesequencetheorique[]    findAll()
- * @method Activitesequencetheorique[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method ActiviteSequenceTheorique |null find($id, $lockMode = null, $lockVersion = null)
+ * @method ActiviteSequenceTheorique|null findOneBy(array $criteria, array $orderBy = null)
+ * @method ActiviteSequenceTheorique[]    findAll()
+ * @method ActiviteSequenceTheorique[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class ActiviteSequenceTheoriqueRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Activitesequencetheorique::class);
+        parent::__construct($registry, ActiviteSequenceTheorique::class);
     }
 
     /**
-     * @return Activitesequencetheorique[]
+     * @return ActiviteSequenceTheorique[]
      */
     public function findAllBySequencetheorique($idSequenceTheorique)
     {
-        return $this->createQueryBuilder('Activitesequencetheorique')
-            ->andWhere('Activitesequencetheorique.idsequencetheorique = :idsequencetheorique')
+        return $this->createQueryBuilder('ActiviteSequenceTheorique')
+            ->andWhere('ActiviteSequenceTheorique.idsequencetheorique = :idsequencetheorique')
             ->setParameter('idsequencetheorique', $idSequenceTheorique)
-            ->orderBy('Activitesequencetheorique.ordre', 'ASC')
+            ->orderBy('ActiviteSequenceTheorique.ordre', 'ASC')
 //            ->leftJoin('genus.genusScientists', 'genusScientist')
 //            ->addSelect('genusScientist')
             ->getQuery()
@@ -35,16 +35,16 @@ class ActiviteSequenceTheoriqueRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Activitesequencetheorique[]
+     * @return ActiviteSequenceTheorique[]
      */
     public function findOneBySequenceTheorique($idSequenceTheorique, $idActivite)
     {
-        return $this->createQueryBuilder('Activitesequencetheorique')
-            ->andWhere('Activitesequencetheorique.idsequencetheorique = :idsequencetheorique')
-            ->andWhere('Activitesequencetheorique.id = :id')
+        return $this->createQueryBuilder('ActiviteSequenceTheorique')
+            ->andWhere('ActiviteSequenceTheorique.idsequencetheorique = :idsequencetheorique')
+            ->andWhere('ActiviteSequenceTheorique.id = :id')
             ->setParameter('idsequencetheorique', $idSequenceTheorique)
             ->setParameter('id', $idActivite)
-            ->orderBy('Activitesequencetheorique.ordre', 'ASC')
+            ->orderBy('ActiviteSequenceTheorique.ordre', 'ASC')
 //            ->leftJoin('genus.genusScientists', 'genusScientist')
 //            ->addSelect('genusScientist')
             ->getQuery()

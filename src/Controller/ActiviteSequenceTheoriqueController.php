@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Activitesequencetheorique;
+use App\Entity\ActiviteSequenceTheorique;
 use App\Form\ActivitesequencetheoriqueType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/activitesequencetheorique")
  */
-class ActivitesequencetheoriqueController extends AbstractController
+class ActiviteSequenceTheoriqueController extends AbstractController
 {
     /**
      * @Route("/", name="activitesequencetheorique_index", methods={"GET"})
@@ -20,7 +20,7 @@ class ActivitesequencetheoriqueController extends AbstractController
     public function index(): Response
     {
         $activitesequencetheoriques = $this->getDoctrine()
-            ->getRepository(Activitesequencetheorique::class)
+            ->getRepository(ActiviteSequenceTheorique::class)
             ->findAll();
 
         return $this->render('activitesequencetheorique/index.html.twig', [
@@ -33,7 +33,7 @@ class ActivitesequencetheoriqueController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $activitesequencetheorique = new Activitesequencetheorique();
+        $activitesequencetheorique = new ActiviteSequenceTheorique();
         $form = $this->createForm(ActivitesequencetheoriqueType::class, $activitesequencetheorique);
         $form->handleRequest($request);
 
@@ -54,7 +54,7 @@ class ActivitesequencetheoriqueController extends AbstractController
     /**
      * @Route("/{id}", name="activitesequencetheorique_show", methods={"GET"})
      */
-    public function show(Activitesequencetheorique $activitesequencetheorique): Response
+    public function show(ActiviteSequenceTheorique $activitesequencetheorique): Response
     {
         return $this->render('activitesequencetheorique/show.html.twig', [
             'activitesequencetheorique' => $activitesequencetheorique,
@@ -64,7 +64,7 @@ class ActivitesequencetheoriqueController extends AbstractController
     /**
      * @Route("/{id}/edit", name="activitesequencetheorique_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Activitesequencetheorique $activitesequencetheorique): Response
+    public function edit(Request $request, ActiviteSequenceTheorique $activitesequencetheorique): Response
     {
         $form = $this->createForm(ActivitesequencetheoriqueType::class, $activitesequencetheorique);
         $form->handleRequest($request);
@@ -84,7 +84,7 @@ class ActivitesequencetheoriqueController extends AbstractController
     /**
      * @Route("/{id}", name="activitesequencetheorique_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Activitesequencetheorique $activitesequencetheorique): Response
+    public function delete(Request $request, ActiviteSequenceTheorique $activitesequencetheorique): Response
     {
         if ($this->isCsrfTokenValid('delete'.$activitesequencetheorique->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();

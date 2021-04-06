@@ -8,13 +8,13 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Sequencetheorique
+ * SequenceTheorique
  *
  * @ORM\Table(name="sequencetheorique")
  * @ORM\Entity
  * @ApiResource
  */
-class Sequencetheorique
+class SequenceTheorique
 {
     /**
      * @var int
@@ -40,12 +40,12 @@ class Sequencetheorique
     private $niveau;
 
     /**
-     * @ORM\OneToMany(targetEntity=Activitesequencetheorique::class, mappedBy="idsequencetheorique", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=ActiviteSequenceTheorique::class, mappedBy="idsequencetheorique", orphanRemoval=true)
      */
     private $activitesequencetheoriques;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Categoriesequence::class, inversedBy="sequencetheoriques")
+     * @ORM\ManyToOne(targetEntity=CategorieSequence::class, inversedBy="SequenceTheorique")
      * @ORM\JoinColumn(nullable=false)
      */
     private $idcategoriesequence;
@@ -85,14 +85,14 @@ class Sequencetheorique
     }
 
     /**
-     * @return Collection|Activitesequencetheorique[]
+     * @return Collection|ActiviteSequenceTheorique[]
      */
     public function getActivitesequencetheoriques(): Collection
     {
         return $this->activitesequencetheoriques;
     }
 
-    public function addActivitesequencetheorique(Activitesequencetheorique $activitesequencetheorique): self
+    public function addActivitesequencetheorique(ActiviteSequenceTheorique $activitesequencetheorique): self
     {
         if (!$this->activitesequencetheoriques->contains($activitesequencetheorique)) {
             $this->activitesequencetheoriques[] = $activitesequencetheorique;
@@ -102,7 +102,7 @@ class Sequencetheorique
         return $this;
     }
 
-    public function removeActivitesequencetheorique(Activitesequencetheorique $activitesequencetheorique): self
+    public function removeActivitesequencetheorique(ActiviteSequenceTheorique $activitesequencetheorique): self
     {
         if ($this->activitesequencetheoriques->removeElement($activitesequencetheorique)) {
             // set the owning side to null (unless already changed)
@@ -114,12 +114,12 @@ class Sequencetheorique
         return $this;
     }
 
-    public function getIdcategoriesequence(): ?Categoriesequence
+    public function getIdcategoriesequence(): ?CategorieSequence
     {
         return $this->idcategoriesequence;
     }
 
-    public function setIdcategoriesequence(?Categoriesequence $idcategoriesequence): self
+    public function setIdcategoriesequence(?CategorieSequence $idcategoriesequence): self
     {
         $this->idcategoriesequence = $idcategoriesequence;
 
