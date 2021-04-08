@@ -4,16 +4,15 @@
 namespace App\Controller;
 
 use ApiPlatform\Core\Validator\ValidatorInterface;
-use App\Entity\Utilisateur;
-use App\Repository\ActiviteSequenceTheoriqueRepository;
-use App\Repository\UtilisateurRepository;
-use App\Repository\CommentaireAtelierRepository;
+use App\Entity\User;
+use App\Repository\TheoreticalSequenceActivityRepository;
+use App\Repository\UserRepository;
+use App\Repository\WorkshopCommentaryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -21,37 +20,37 @@ use Symfony\Component\Serializer\SerializerInterface;
 class ApiController extends AbstractController
 {
     /**
-     * @Route("/api/ateliers/{id}/commentaires", name="afficherCommentaires", methods={"GET"})
-     * @param CommentaireAtelierRepository $repository
+     * @Route("/api/workshops/{id}/commentaries", name="showCommentaries", methods={"GET"})
+     * @param WorkshopCommentaryRepository $repository
      * @param $id
      * @return Response
      */
-    public function afficherCommentaires(CommentaireAtelierRepository $repository, $id): Response
+    public function showCommentaries(WorkshopCommentaryRepository $repository, $id): Response
     {
-        return $this->json($repository->findBy(['atelier' => $id]), 200, [], []);
+        return $this->json($repository->findBy(['workshop' => $id]), 200, [], []);
     }
 
     /**
-     * @Route("/api/sequence_theorique/{id}/activites", name="consulterActivitesSequence", methods={"GET"})
-     * @param ActiviteSequenceTheoriqueRepository $repository
+     * @Route("/api/theoretical_sequences/{id}/activities", name="showSequenceActivities", methods={"GET"})
+     * @param TheoreticalSequenceActivityRepository $repository
      * @param $id
      * @return Response
      */
-    public function consulterActivitesSequence(ActiviteSequenceTheoriqueRepository $repository, $id): Response
+    public function showSequenceActivities(TheoreticalSequenceActivityRepository $repository, $id): Response
     {
-        return $this->json($repository->findAllBySequencetheorique($id), 200, [], []);
+        return $this->json($repository->findAllByTheoreticalSequence($id), 200, [], []);
     }
 
     /**
-     * @Route("/api/sequence_theorique/{idSequence}/activites/{idActivite}", name="consulterActiviteSequence", methods={"GET"})
-     * @param ActiviteSequenceTheoriqueRepository $repository
-     * @param $idSequence
-     * @param $idActivite
+     * @Route("/api/theoretical_sequences/{sequenceId}/activities/{ActivityId}", name="showSequenceActivity", methods={"GET"})
+     * @param TheoreticalSequenceActivityRepository $repository
+     * @param $sequenceId
+     * @param $activityId
      * @return Response
      */
-    public function consulterActiviteSequence(ActiviteSequenceTheoriqueRepository $repository, $idSequence, $idActivite): Response
+    public function showSequenceActivity(TheoreticalSequenceActivityRepository $repository, $sequenceId, $activityId): Response
     {
-        return $this->json($repository->findOneBySequenceTheorique($idSequence, $idActivite), 200, [], []);
+        return $this->json($repository->findOneByTheoreticalSequence($sequenceId, $activityId), 200, [], []);
     }
 
     /**
@@ -69,18 +68,18 @@ class ApiController extends AbstractController
      * @Route("/api/currentUser", name="modifyCurrentUser", methods={"PUT"})
      */
     public function modifyCurrentUser(Request $request, SerializerInterface $serializer, ValidatorInterface $validator, EntityManagerInterface $em,
-        UtilisateurRepository $repository): Response
+                                      UserRepository $repository): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $json = $request->getContent();
 
         try {
-            $userInfos = $serializer->deserialize($json, Utilisateur::class, 'json');
+            $userInfos = $serializer->deserialize($json, User::class, 'json');
 
             $user = $repository->findOneBy(['login' => $this->getUser()->getUsername()]);
-            $user->setNomUtilisateur($userInfos->getNomUtilisateur());
-            $user->setPrenomUtilisateur($userInfos->getPrenomUtilisateur());
+            $user->setLastname($userInfos->getLastname());
+            $user->setFirstname($userInfos->getFirstname());
             $user->setEmail($userInfos->getEmail());
 
             $errors = $validator->validate($user);
@@ -103,14 +102,14 @@ class ApiController extends AbstractController
      * @Route("/api/currentUser/password", name="modifyCurrentUserPassword", methods={"PUT"})
      */
     public function modifyCurrentUserPassword(Request $request, SerializerInterface $serializer, ValidatorInterface $validator, EntityManagerInterface $em,
-                                              UtilisateurRepository $repository, UserPasswordEncoderInterface $encoder): Response
+                                              UserRepository $repository, UserPasswordEncoderInterface $encoder): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $json = $request->getContent();
 
         try {
-            $password = $serializer->deserialize($json, Utilisateur::class, 'json')->getPassword();
+            $password = $serializer->deserialize($json, User::class, 'json')->getPassword();
 
             $user = $repository->findOneBy(['login' => $this->getUser()->getUsername()]);
 

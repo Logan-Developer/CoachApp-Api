@@ -10,9 +10,10 @@
         "api-platform/core": "2.7.x-dev",
         "composer/package-versions-deprecated": "1.11.99.1",
         "doctrine/annotations": "^1.0",
-        "doctrine/doctrine-bundle": "^2.2",
+        "doctrine/doctrine-bundle": "^2.3",
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.8",
+        "gesdinet/jwt-refresh-token-bundle": "^0.11.1",
         "lexik/jwt-authentication-bundle": "^2.11",
         "nelmio/cors-bundle": "^2.1",
         "phpdocumentor/reflection-docblock": "^5.2",
@@ -46,6 +47,7 @@
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
         "symfony/browser-kit": "^5.2",
         "symfony/css-selector": "^5.2",
         "symfony/debug-bundle": "^5.2",
