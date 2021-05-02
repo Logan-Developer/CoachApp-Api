@@ -16,10 +16,10 @@ class AppFixtures extends Fixture
         // $manager->persist($product);
 
         $user = new User();
-        $user->setFirstname('Bob');
-        $user->setLastname('Sponge');
-        $user->setEmail('bob.sponge@gmail.com');
-        $user->setLogin('bsponge');
+        $user->setFirstname('user');
+        $user->setLastname('user');
+        $user->setEmail('user.user@gmail.com');
+        $user->setLogin('user');
         $user->setRoles(['ROLE_USER']);
         $user->setPassword('$argon2id$v=19$m=65536,t=4,p=1$M29mdnI3Yllndy9SUnJtUA$z/NNWjaaZP1JU6ll0aRKbJe3r4ISUdNFJO35SF5rqGs');
         $manager->persist($user);
