@@ -4,6 +4,7 @@ Api for a fictive coaching app.
 ## Init project
 Start by cloning the project: https://github.com/Logan-Developer/CoachApp-Api.git  
 Then update the composer dependencies by executing the command __composer update__  
+Finally, the command __symfony console lexik:jwt:generate-keypair__ will generate for you the jwt keys.
 
 ## Configure the database
 Open the *.env* file and modify the __DATABASE_URL__ variable if needed.  
