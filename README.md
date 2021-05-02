@@ -16,3 +16,6 @@ You can populate the database with data using the provided fixtures with the com
 If you use the fixtures, two users are provided:  
 * A normal user with login __user__ and password __secret__
 * An admin with login __admin__ and password __secret__
+
+## Start the server
+You can start the symfony internal server using the command __symfony serve__
