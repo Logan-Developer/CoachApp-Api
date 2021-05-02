@@ -38,7 +38,7 @@ class ApiController extends AbstractController
     /**
      * @Route("/api/workshops", name="addWorkshop", methods={"POST"})
      */
-    public function addWorkshop(Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager, ValidatorInterface $validator): Response
+    public function addWorkshop(Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
@@ -52,6 +52,7 @@ class ApiController extends AbstractController
             $workshop->setDescription($data->getDescription());
             $workshop->setIntensityUnity($data->getIntensityUnity());
             $workshop->setPerfUnity($data->getPerfUnity());
+            $workshop->setImage("noImage");
 
             $entityManager->persist($workshop);
         } catch (NotEncodableValueException $e) {
