@@ -3,12 +3,13 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\WorkshopCommentaryRepository;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use App\Repository\DrinkCommentRepository;
 
 /**
- * @ORM\Entity(repositoryClass=WorkshopCommentaryRepository::class)
+ * @ORM\Entity(repositoryClass=DrinkCommentRepository::class)
  * @ApiResource(
  *     collectionOperations={
  *          "get",
@@ -21,7 +22,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     }
  * )
  */
-class WorkshopCommentary
+class DrinkComment
 {
     /**
      * @var int
@@ -29,41 +30,41 @@ class WorkshopCommentary
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Id
-     * @Groups ("workshop:read")
+     * @Groups ("drink:read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups ("workshop:read")
+     * @Groups ("drink:read")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups ("workshop:read")
+     * @Groups ("drink:read")
      */
     private $message;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(nullable=false)
-     * @Groups ("workshop:read")
+     * @Groups ("drink:read")
+     * @ApiSubresource()
      */
     private $owner;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups ("workshop:read")
+     * @Groups ("drink:read")
      */
     private $date;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Workshop::class, inversedBy="commentaries")
+     * @ORM\ManyToOne(targetEntity=Drink::class, inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups ("workshop:read")
      */
-    private $workshop;
+    private $drink;
 
     public function getId(): ?int
     {
@@ -118,14 +119,14 @@ class WorkshopCommentary
         return $this;
     }
 
-    public function getWorkshop(): ?Workshop
+    public function getDrink(): ?Drink
     {
-        return $this->workshop;
+        return $this->drink;
     }
 
-    public function setWorkshop(?Workshop $workshop): self
+    public function setDrink(?Drink $drink): self
     {
-        $this->workshop = $workshop;
+        $this->drink = $drink;
 
         return $this;
     }

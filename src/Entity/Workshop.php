@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Workshop
@@ -22,6 +23,7 @@ class Workshop
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups ("workshop:read")
      */
     private $id;
 
@@ -29,6 +31,7 @@ class Workshop
      * @var string
      *
      * @ORM\Column(name="title", type="text", length=65535, nullable=false)
+     * @Groups ("workshop:read")
      */
     private $title;
 
@@ -36,6 +39,7 @@ class Workshop
      * @var string
      *
      * @ORM\Column(name="image", type="text", length=65535, nullable=false)
+     * @Groups ("workshop:read")
      */
     private $image;
 
@@ -43,6 +47,7 @@ class Workshop
      * @var string
      *
      * @ORM\Column(name="perfUnity", type="text", length=65535, nullable=false)
+     * @Groups ("workshop:read")
      */
     private $perfUnity;
 
@@ -50,6 +55,7 @@ class Workshop
      * @var string
      *
      * @ORM\Column(name="intensityUnity", type="text", length=65535, nullable=false)
+     * @Groups ("workshop:read")
      */
     private $intensityUnity;
 
@@ -57,18 +63,13 @@ class Workshop
      * @var string
      *
      * @ORM\Column(name="description", type="text", length=65535, nullable=false)
+     * @Groups ("workshop:read")
      */
     private $description;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="resume", type="text", length=65535, nullable=false)
-     */
-    private $resume;
-
-    /**
-     * @ORM\OneToMany(targetEntity=WorkshopCommentary::class, mappedBy="atelier")
+     * @ORM\OneToMany(targetEntity=WorkshopCommentary::class, mappedBy="workshop")
+     * @Groups ("workshop:read")
      */
     private $commentaries;
 
@@ -138,18 +139,6 @@ class Workshop
     public function setDescription(string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getResume(): ?string
-    {
-        return $this->resume;
-    }
-
-    public function setResume(string $resume): self
-    {
-        $this->resume = $resume;
 
         return $this;
     }

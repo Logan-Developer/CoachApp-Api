@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\DrinkRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=DrinkRepository::class)
@@ -16,23 +17,33 @@ class Drink
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups  ("drink:read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups ("drink:read")
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups ("drink:read")
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups ("drink:read")
      */
     private $image;
+
+    /**
+     * @ORM\OneToMany(targetEntity=DrinkComment::class, mappedBy="drink")
+     * @Groups ("drink:read")
+     */
+    private $comments;
 
     public function getId(): ?int
     {
@@ -73,5 +84,21 @@ class Drink
         $this->image = $image;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param mixed $comments
+     */
+    public function setComments($comments): void
+    {
+        $this->comments = $comments;
     }
 }

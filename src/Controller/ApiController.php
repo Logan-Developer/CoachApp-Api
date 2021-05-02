@@ -4,10 +4,15 @@
 namespace App\Controller;
 
 use ApiPlatform\Core\Validator\ValidatorInterface;
+use App\Entity\Drink;
+use App\Entity\DrinkComment;
 use App\Entity\User;
+use App\Entity\Workshop;
+use App\Entity\WorkshopCommentary;
+use App\Repository\DrinkRepository;
 use App\Repository\TheoreticalSequenceActivityRepository;
 use App\Repository\UserRepository;
-use App\Repository\WorkshopCommentaryRepository;
+use App\Repository\WorkshopRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,14 +25,88 @@ use Symfony\Component\Serializer\SerializerInterface;
 class ApiController extends AbstractController
 {
     /**
-     * @Route("/api/workshops/{id}/commentaries", name="showCommentaries", methods={"GET"})
-     * @param WorkshopCommentaryRepository $repository
-     * @param $id
-     * @return Response
+     * @Route("/api/workshops/{id}", name="getWorkshop", methods={"GET"})
      */
-    public function showCommentaries(WorkshopCommentaryRepository $repository, $id): Response
+    public function getWorkshop(WorkshopRepository $repository, $id): Response
     {
-        return $this->json($repository->findBy(['workshop' => $id]), 200, [], []);
+
+        $workshop = $repository->findOneBy(['id'=>$id]);
+
+        return $this->json($workshop, 200, [], ["groups" => "workshop:read"]);
+    }
+
+    /**
+     * @Route("/api/workshops", name="addWorkshop", methods={"POST"})
+     */
+    public function addWorkshop(Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager, ValidatorInterface $validator): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $json = $request->getContent();
+
+        try {
+            $data = $serializer->deserialize($json, Workshop::class, 'json');
+
+            $workshop = new Workshop();
+            $workshop->setTitle($data->getTitle());
+            $workshop->setDescription($data->getDescription());
+            $workshop->setIntensityUnity($data->getIntensityUnity());
+            $workshop->setPerfUnity($data->getPerfUnity());
+
+            $entityManager->persist($workshop);
+        } catch (NotEncodableValueException $e) {
+            return $this->json([
+                'status' => 400,
+                'message' => $e->getMessage()
+            ], 400);
+        }
+
+        $entityManager->persist($workshop);
+        $entityManager->flush();
+
+        return $this->json($workshop, 201, [], ["groups" => "workshop:read"]);
+    }
+
+    /**
+     * @Route("/api/workshops/{id}/comments", name="addWorkshopComment", methods={"POST"})
+     */
+    public function addWorkshopComment(Workshop $workshop, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $data = $request->toArray();
+        $comment = new WorkshopCommentary();
+        $comment->setWorkshop($workshop);
+        $comment->setOwner($this->getUser());
+        $comment->setDate(new \DateTime());
+        $comment->setTitle($data["title"]);
+        $comment->setMessage($data["message"]);
+
+        $entityManager->persist($comment);
+        $entityManager->flush();
+
+        return $this->json($comment, 200, [], ["groups" => "workshop:read"]);
+    }
+
+    /**
+     * @Route("/api/drinks/{id}/comments", name="addDrinkComment", methods={"POST"})
+     */
+    public function addDrinkComment(Drink $drink, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $data = $request->toArray();
+        $comment = new DrinkComment();
+        $comment->setDrink($drink);
+        $comment->setOwner($this->getUser());
+        $comment->setDate(new \DateTime());
+        $comment->setTitle($data["title"]);
+        $comment->setMessage($data["message"]);
+
+        $entityManager->persist($comment);
+        $entityManager->flush();
+
+        return $this->json($comment, 200, [], ["groups" => "drink:read"]);
     }
 
     /**
@@ -130,5 +209,16 @@ class ApiController extends AbstractController
                 'message' => $e->getMessage()
             ], 400);
         }
+    }
+
+    /**
+     * @Route("/api/drinks/{id}", name="getDrink", methods={"GET"})
+     */
+    public function getDrink(DrinkRepository $repository, $id): Response
+    {
+
+        $workshop = $repository->findOneBy(['id'=>$id]);
+
+        return $this->json($workshop, 200, [], ["groups" => "drink:read"]);
     }
 }

@@ -35,4 +35,3 @@ security:
 
     access_control:
         - { path: ^/authentication_token/refresh, roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
-        - { path: ^/api/users, roles: [ROLE_ADMIN] }

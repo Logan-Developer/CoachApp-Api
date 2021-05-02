@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity
@@ -30,12 +31,14 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups ("workshop:read", "drink:read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", unique=true)
      * @Assert\NotBlank()
+     * @Groups ("workshop:read", "drink:read")
      */
     private $login;
 
@@ -43,6 +46,7 @@ class User implements UserInterface
      * @ORM\Column(type="string" )
      * @Assert\NotBlank()
      * @Assert\Length(min=2, max=50)
+     * @Groups ("workshop:read", "drink:read")
      */
     private $lastname;
 
@@ -50,12 +54,14 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
      * @Assert\Length(min=2, max=50)
+     * @Groups ("workshop:read", "drink:read")
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", unique=true )
      * @Assert\Email()
+     * @Groups ("workshop:read", "drink:read")
      */
     private $email;
 
@@ -71,11 +77,6 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @ORM\OneToMany(targetEntity=WorkshopCommentary::class, mappedBy="owner", orphanRemoval=true)
-     */
-    private $workshopCommentaries;
-
-    /**
      * User constructor.
      */
     public function __construct()
@@ -87,7 +88,6 @@ class User implements UserInterface
         $this->email = "";
         $this->password = "";
         $this->roles = "";
-        $this->workshopCommentaries = new ArrayCollection();
     }
 
     public function getId(): int
@@ -177,35 +177,5 @@ class User implements UserInterface
 
     public function eraseCredentials(): void
     {
-    }
-
-    /**
-     * @return Collection|WorkshopCommentary[]
-     */
-    public function getWorkshopCommentaries(): Collection
-    {
-        return $this->workshopCommentaries;
-    }
-
-    public function addWorkshopCommentary(WorkshopCommentary $workshopCommentary): self
-    {
-        if (!$this->workshopCommentaries->contains($workshopCommentary)) {
-            $this->workshopCommentaries[] = $workshopCommentary;
-            $workshopCommentary->setOwner($this);
-        }
-
-        return $this;
-    }
-
-    public function removeWorkshopCommentary(WorkshopCommentary $workshopCommentary): self
-    {
-        if ($this->workshopCommentaries->removeElement($workshopCommentary)) {
-            // set the owning side to null (unless already changed)
-            if ($workshopCommentary->getOwner() === $this) {
-                $workshopCommentary->setOwner(null);
-            }
-        }
-
-        return $this;
     }
 }
