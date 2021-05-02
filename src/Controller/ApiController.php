@@ -85,7 +85,7 @@ class ApiController extends AbstractController
         $entityManager->persist($comment);
         $entityManager->flush();
 
-        return $this->json($comment, 200, [], ["groups" => "workshop:read"]);
+        return $this->json($comment, 201, [], ["groups" => "workshop:read"]);
     }
 
     /**
